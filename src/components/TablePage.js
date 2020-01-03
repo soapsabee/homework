@@ -1,7 +1,7 @@
-import React,{ useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Table } from 'reactstrap'
 import { useSelector, useDispatch } from 'react-redux';
-import { usersFetch } from '../actions'
+import { usersFetch, deleteUser } from '../actions'
 
 
 const TablePage = () => {
@@ -10,33 +10,35 @@ const TablePage = () => {
 
   const users = useSelector(state => state.users);
 
+  const onClickDeleteUser = (id) => {
+    
+    dispatch(deleteUser(id))
+  }
 
   const listUser = users.map((user) => {
-        
-    return  <tr><td key={user.id}>{user.first_name}</td>  </tr>
-         
- 
-})
+
+    return <tr key={user.id}>
+      <td key={user.id}>{user.first_name}  <button color="danger" onClick={() => onClickDeleteUser(user.id)}>Delete</button></td> 
+     </tr>
+  })
 
 
   useEffect(() => {
     dispatch(usersFetch())
-}, [])
+  }, [])
 
-    return(
-        <Table>
+  return (
+    <Table>
       <thead>
         <tr>
           <th>First Name</th>
-
         </tr>
       </thead>
       <tbody>
-      {listUser}
-   
+        {listUser}
       </tbody>
     </Table>
-    )
+  )
 
 }
 

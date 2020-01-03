@@ -25,8 +25,11 @@ const FormAdd = () => {
     const addUser = () => {
         console.log("handelSubmit");
         console.log("addUser: "+ fname);
+        let data = {
+          first_name : fname
+        }
         
-        // dispatch(addUsers(fname))
+        dispatch(addUsers(data))
     }
 
 
@@ -41,7 +44,7 @@ const FormAdd = () => {
           
         </FormGroup>
 
-        <Button onClick={addUser()}>Submit</Button>
+        <Button onClick={() => addUser()}>Submit</Button>
       </Form>
     )
 }
