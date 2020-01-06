@@ -6,20 +6,30 @@ import HeaderTable from '../components/HeaderTable'
 const Home = () => {
 
     const [modal, setModal] = useState(false);
-
+    const [typeForm, setTypeForm] = useState("addForm")
     const toggle = () => setModal(!modal);
+    const toggleEdit = () => {
+        setTypeForm("editForm")
+        toggle()
+    }
+
+    const toggleAdd = () => {
+        setTypeForm("addForm")
+        toggle()
+    }
+
 
     return (
         <div>
             <Container>
 
-                    <Button className="float-right" onClick={toggle} color="success">Add</Button>
+                    <Button className="float-right" onClick={toggleAdd} color="success">Add</Button>
 
-                    <TablePage />
+                    <TablePage toggleModal={toggleEdit}/>
                     <Modal isOpen={modal} fade={false} toggle={toggle} >
                         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
                         <ModalBody>
-                            <FormAdd toggle={toggle} />
+                         {typeForm == 'addForm' ? <FormAdd toggle={toggle} /> : <div>FormEdit</div>}
                         </ModalBody>
                         <ModalFooter>
                             <Button color="secondary" onClick={toggle}>Cancel</Button>

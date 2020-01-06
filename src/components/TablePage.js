@@ -1,10 +1,10 @@
-import React, { useEffect , useState } from 'react';
+import React, { useEffect , useState , useCallback } from 'react';
 import { Table } from 'reactstrap'
 import { useSelector, useDispatch } from 'react-redux';
 import { usersFetch, deleteUser } from '../actions'
 
 
-const TablePage = () => {
+const TablePage = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -15,6 +15,11 @@ const TablePage = () => {
   const onClickDeleteUser = (id) => {
     
     dispatch(deleteUser(id))
+  }
+
+  const onClickEditUser = (id) => {
+    console.log("onClickEditUser : "+ id);
+    props.toggleModal()
   }
 
   const handleSearch = (e) =>{
@@ -31,14 +36,14 @@ const TablePage = () => {
   const listUser = users.map((user) => {
 
     return <tr key={user.id}>
-      <td key={user.id}>{user.first_name}  <button color="danger" onClick={() => onClickDeleteUser(user.id)}>Delete</button></td> 
+      <td key={user.id}>{user.first_name}  <button color="danger" onClick={() => onClickDeleteUser(user.id)}>Delete</button> <button color="success" onClick={() => onClickEditUser(user.id)}>Edit</button></td> 
      </tr>
   })
 
   const listUserSearch = searchResults.map((user) => {
 
     return <tr key={user.id}>
-      <td key={user.id}>{user.first_name}  <button color="danger" onClick={() => onClickDeleteUser(user.id)}>Delete</button></td> 
+      <td key={user.id}>{user.first_name}  <button color="danger" onClick={() => onClickDeleteUser(user.id)}>Delete</button> <button color="success" onClick={() => onClickEditUser(user.id)}>Edit</button></td> 
      </tr>
   })
 
